@@ -19,7 +19,12 @@ tqdm = "*"
 pyyaml = "*"
 streamlit = "*"
 Pillow = "*"
-transformers = "*"
+transformers = "==4.36.0"  # Pinned for PyTorch 2.1.x compatibility (newer versions require PyTorch 2.2+)
+
+# Note: The following packages are installed via pip/mim after poetry install:
+# - mmengine==0.10.3 (pinned for PyTorch 2.1.x compatibility)
+# - mmcv==2.1.0 (from OpenMMLab pre-built wheels)
+# - mmdet==3.3.0
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
