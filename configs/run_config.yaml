@@ -1,0 +1,36 @@
+# Run configuration for smoke inference on Apple Silicon (MPS)
+
+device: mps  # options: auto|mps|cpu
+num_workers: 0
+batch_size: 1
+confidence_threshold: 0.3
+
+model:
+  # Use model name only; config and weights will auto-download via DetInferencer
+  #model_name: "maskformer_r50_ms-16xb1-75e_coco"
+  model_name: "maskformer_swin-l-p4-w12_64xb1-ms-300e_coco"
+
+data:
+  input_dir: "data/samples/images"
+  output_dir: "outputs/smoke"
+
+logging:
+  codecarbon_output_dir: "outputs/codecarbon"
+  run_metadata_csv: "outputs/run_metrics.csv"
+  eval_metrics_csv: "outputs/metrics_eval.csv"
+  experiment_name: "smoke_mps"
+  per_image_latency_csv: "outputs/run_per_image_latency.csv"
+
+# COCO panoptic evaluation settings
+coco_eval:
+  img_dir: "data/valid/val"
+  panoptic_json: "data/valid/annotations/panoptic_val.json"
+  panoptic_masks_dir: "data/valid/annotations/panoptic_val"
+  max_samples: 5  # set smaller for a quick run
+
+# coco_eval:
+#   img_dir: "data/val2017"
+#   panoptic_json: "data/annotations/panoptic_val2017.json"
+#   panoptic_masks_dir: "data/annotations/panoptic_val2017"
+#   max_samples: 5  # set smaller for a quick run
+#   instances_json: "data/annotations/instances_val2017.json"

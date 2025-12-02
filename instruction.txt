@@ -1,0 +1,44 @@
+SUBJECT : Panoptic Segmentation  Smart Data, Smart Deployment - Building Edge Intelligence with ZED Box
+Panoptic Segmentation
+Smart Data, Smart Deployment - Building Edge Intelligence with ZED Box
+Context:
+In 2025, panoptic segmentation has established itself as the essential unified perception technology for both terrestrial and maritime autonomous systems, providing unprecedented contextual understanding of their respective environments. In the autonomous vehicle sector, it enables a holistic interpretation of road scenes by simultaneously distinguishing static infrastructure from dynamic users, while for maritime surveillance drones, it ensures comprehensive analysis of aquatic spaces by identifying both fixed and mobile elements. This unified approach radically transforms operational safety: vehicles anticipate risky behaviors such as pedestrians crossing outside designated areas, while drones detect suspicious vessels or persons in distress. The technology excels in complex environments, whether in dense urban intersections or vast maritime expanses, by providing granular situational awareness. It enables autonomous systems to prioritize critical actions—avoiding an accident on the road or intervening during marine pollution—through hierarchical risk assessment.
+ 
+However, the deployment of these sophisticated AI models raises crucial environmental concerns regarding their carbon footprint. The training and inference phases of panoptic segmentation systems consume substantial computational resources, translating into significant energy consumption and CO2 emissions. As these technologies scale globally, their environmental impact becomes increasingly substantial. This reality necessitates the development of more energy-efficient architectures, optimized inference algorithms, and the use of renewable energy sources for AI training centers. The AI community is now prioritizing green AI initiatives, aiming to achieve an optimal balance between technological performance and environmental sustainability, making carbon efficiency a key metric in evaluating next-generation autonomous systems.
+ 
+Aim:
+The primary objective of this study is to conduct a comprehensive carbon footprint analysis of various panoptic segmentation models during inference on CityScapes and COCO datasets, evaluated across both workstation and ZED Box platforms. Subsequently, the research aims to quantify carbon emissions generated during both training and inference phases when these models are adapted and applied to the iSAID aerial dataset, while simultaneously assessing model robustness in this challenging domain. To enable effective domain adaptation from terrestrial (Cityscapes/COCO) to aerial imagery (iSAID), a hybrid strategy combining transfer learning with progressive fine-tuning will be implemented. This methodology initiates with partial architecture freezing, fine-tuning only the decision heads initially to preserve learned generic features. Progressive unfreezing of deep backbone layers then facilitates optimal adaptation to aerial image characteristics, complemented by gradual data mixing—employing evolving ratios of Cityscapes/COCO to iSAID samples—to ensure smooth cross-domain transition. The approach further incorporates curriculum learning, beginning with simple aerial scenes before advancing to complex scenarios, thereby maintaining equilibrium between prior knowledge preservation and acquisition of target domain patterns.
+ 
+For accurate carbon emission tracking, the study will employ CodeCarbon and CarbonTracker libraries to monitor energy consumption throughout all experimental phases. Finally, each optimized model will be deployed on a ZED Box equipped with stereo camera for real-time panoptic segmentation of urban road scenes, enabling practical performance validation and environmental impact assessment under operational conditions.
+ 
+Tools:
+Zotero - Reference management software (https://www.zotero.org/)
+JabRef - Reference management software: https://www.jabref.org/#download
+ 
+CodeCarbon
+https://github.com/mlco2/codecarbon
+ 
+CarbonTracker
+https://github.com/saintslab/carbontracker
+ 
+Deliverable:
+Report (~50 pages)
+Introduction
+State of the Art
+The aim is to present and explain all methods/solutions studied in articles that had been read. It is mandatory to correctly cite the references. We expect your own original writing. Copy/paste or the use of generative AI tools is not allowed.
+Provide a detailed comparative study with advantages and disadvantages of each method/solution (at least 4 pages).
+Each student must present at least one method/solution. Each method can only be used once per class member. Use the Teams channel to indicate your choice and verify its availability.
+Methodology
+Propose a solution to the problem (either an existing method or a newly proposed one).
+Clearly explain the reasoning behind the choice of this method and describe how it will be implemented.
+Results obtained (All class members need to reach a consensus on the metrics before beginning the experiments.)
+Problems encountered
+Conclusion
+PowerPoint of Oral Presentation
+Source code of your implementation, graphics, and the report in DOCX or LaTeX format
+ 
+
+
+***
+I have decided to go with mmdetection
+***

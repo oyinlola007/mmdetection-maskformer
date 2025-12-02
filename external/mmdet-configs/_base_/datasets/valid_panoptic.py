@@ -1,0 +1,235 @@
+# dataset settings for custom valid panoptic dataset
+dataset_type = "CocoPanopticDataset"
+data_root = "data/valid/"
+backend_args = None
+
+valid_panoptic_metainfo = dict(
+    classes=(
+        "person",
+        "car",
+        "airplane",
+        "truck",
+        "boat",
+        "traffic light",
+        "stop sign",
+        "chair",
+        "swimming pool",
+        "bridge",
+        "gravel",
+        "light",
+        "road",
+        "snow",
+        "water-other",
+        "tree-merged",
+        "fence-merged",
+        "pavement-merged",
+        "grass-merged",
+        "dirt-merged",
+        "building-other-merged",
+        "rock-merged",
+        "background",
+        "animal",
+        "garbage bin",
+        "low obstacle",
+        "powerline",
+        "bus stop",
+        "high obstacle",
+        "tunnel",
+        "harbor",
+    ),
+    thing_classes=(
+        "person",
+        "car",
+        "airplane",
+        "truck",
+        "boat",
+        "traffic light",
+        "stop sign",
+        "chair",
+        "swimming pool",
+        "animal",
+        "garbage bin",
+        "bus stop",
+        "tunnel",
+        "harbor",
+    ),
+    stuff_classes=(
+        "bridge",
+        "gravel",
+        "light",
+        "road",
+        "snow",
+        "water-other",
+        "tree-merged",
+        "fence-merged",
+        "pavement-merged",
+        "grass-merged",
+        "dirt-merged",
+        "building-other-merged",
+        "rock-merged",
+        "background",
+        "low obstacle",
+        "powerline",
+        "high obstacle",
+    ),
+    palette=[
+        (220, 20, 60),
+        (0, 0, 142),
+        (106, 0, 228),
+        (0, 0, 70),
+        (0, 0, 192),
+        (250, 170, 30),
+        (220, 220, 0),
+        (153, 69, 1),
+        (147, 186, 208),
+        (150, 100, 100),
+        (124, 74, 181),
+        (255, 228, 255),
+        (128, 64, 128),
+        (255, 255, 255),
+        (58, 41, 149),
+        (107, 142, 35),
+        (190, 153, 153),
+        (96, 96, 96),
+        (152, 251, 152),
+        (208, 229, 228),
+        (116, 112, 0),
+        (0, 114, 143),
+        (55, 181, 57),
+        (146, 52, 70),
+        (29, 26, 199),
+        (54, 72, 205),
+        (226, 149, 143),
+        (103, 252, 157),
+        (102, 16, 239),
+        (161, 171, 27),
+        (86, 254, 214),
+    ],
+)
+
+train_pipeline = [
+    dict(type="LoadImageFromFile", backend_args=backend_args),
+    dict(
+        type="LoadPanopticAnnotations",
+        backend_args=backend_args,
+        with_bbox=True,
+        with_mask=True,
+        with_seg=True,
+    ),
+    dict(type="RandomFlip", prob=0.5),
+    dict(
+        type="RandomChoice",
+        transforms=[
+            [
+                dict(
+                    type="RandomChoiceResize",
+                    scales=[
+                        (480, 1333),
+                        (512, 1333),
+                        (544, 1333),
+                        (576, 1333),
+                        (608, 1333),
+                        (640, 1333),
+                        (672, 1333),
+                        (704, 1333),
+                        (736, 1333),
+                        (768, 1333),
+                        (800, 1333),
+                    ],
+                    keep_ratio=True,
+                )
+            ],
+            [
+                dict(
+                    type="RandomChoiceResize",
+                    scales=[(400, 1333), (500, 1333), (600, 1333)],
+                    keep_ratio=True,
+                ),
+                dict(
+                    type="RandomCrop",
+                    crop_type="absolute_range",
+                    crop_size=(384, 600),
+                    allow_negative_crop=True,
+                ),
+                dict(
+                    type="RandomChoiceResize",
+                    scales=[
+                        (480, 1333),
+                        (512, 1333),
+                        (544, 1333),
+                        (576, 1333),
+                        (608, 1333),
+                        (640, 1333),
+                        (672, 1333),
+                        (704, 1333),
+                        (736, 1333),
+                        (768, 1333),
+                        (800, 1333),
+                    ],
+                    keep_ratio=True,
+                ),
+            ],
+        ],
+    ),
+    dict(type="PackDetInputs"),
+]
+
+test_pipeline = [
+    dict(type="LoadImageFromFile", backend_args=backend_args),
+    dict(type="Resize", scale=(1333, 800), keep_ratio=True),
+    dict(
+        type="LoadPanopticAnnotations",
+        backend_args=backend_args,
+    ),
+    dict(
+        type="PackDetInputs",
+        meta_keys=("img_id", "img_path", "ori_shape", "img_shape", "scale_factor"),
+    ),
+]
+
+train_dataloader = dict(
+    batch_size=1,
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(type="DefaultSampler", shuffle=True),
+    batch_sampler=dict(type="AspectRatioBatchSampler"),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file="annotations/panoptic_train.json",
+        data_prefix=dict(img="train/", seg="annotations/panoptic_train/"),
+        metainfo=valid_panoptic_metainfo,
+        filter_cfg=dict(filter_empty_gt=True, min_size=32),
+        pipeline=train_pipeline,
+        backend_args=backend_args,
+    ),
+)
+
+val_dataloader = dict(
+    batch_size=1,
+    num_workers=0,
+    persistent_workers=False,
+    drop_last=False,
+    sampler=dict(type="DefaultSampler", shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file="annotations/panoptic_val.json",
+        data_prefix=dict(img="val/", seg="annotations/panoptic_val/"),
+        metainfo=valid_panoptic_metainfo,
+        test_mode=True,
+        pipeline=test_pipeline,
+        backend_args=backend_args,
+    ),
+)
+
+test_dataloader = val_dataloader
+
+val_evaluator = dict(
+    type="CocoPanopticMetric",
+    ann_file=data_root + "annotations/panoptic_val.json",
+    seg_prefix=data_root + "annotations/panoptic_val/",
+    backend_args=backend_args,
+)
+
+test_evaluator = val_evaluator

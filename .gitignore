@@ -1,0 +1,36 @@
+# ---- Python / Poetry ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+*.log
+*.egg-info/
+dist/
+build/
+.mypy_cache/
+.pytest_cache/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+poetry.lock
+
+# ---- IDE / OS ----
+.vscode/
+.idea/
+.DS_Store
+
+
+# ---- Datasets ----
+data
+
+# Keep small metadata in data but ignore large stuff by default
+!data/README.md
+
+colab
+docs
+work_dirs/
+checkpoints/
+

@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "mmdetection-green-ai"
+version = "0.1.0"
+description = "Panoptic segmentation energy/CO2 study with MMDetection on Apple Silicon (MPS)"
+authors = ["Oyinlola Ojelere <ojelere.oyinlola@gmail.com>"]
+# Do not install this repo as a package; use Poetry only for dependency management
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+torch = "==2.1.2"
+torchvision = "==0.16.2"
+openmim = "*"
+codecarbon = "*"
+carbontracker = "*"
+opencv-python = "*"
+numpy = "1.26.4"
+tqdm = "*"
+pyyaml = "*"
+streamlit = "*"
+Pillow = "*"
+transformers = "*"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+isort = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
