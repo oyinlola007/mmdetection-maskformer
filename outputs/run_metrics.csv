@@ -1,4 +1,4 @@
 device,experiment,model,dataset,num_samples,total_seconds,fps,emissions_kg,PQ,SQ,RQ
 macbook,maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_n0,maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py,CocoPanopticDataset,5000,17054.675,0.293,0.002818801,53.24604478496238,81.70970964911011,64.22269380777178
 nvidia-server,maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_n0,maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py,CocoPanopticDataset,5000,1344.227,3.72,0.003197068,53.24626677742443,81.71001418473345,64.2226574
-macbook,maskformer_swin-l-p4-w12_coco_on_valid_n0,maskformer_swin-l-p4-w12_coco_on_valid.py,CocoPanopticDataset,288,298.308,0.965,8.210141205474938e-05,3.7642124377518202,13.926257857079383,5.087926668387611
+macbook,maskformer_swin-l-p4-w12_coco_on_valid_n0,maskformer_swin-l-p4-w12_coco_on_valid.py,valid,288,298.308,0.965,8.210141205474938e-05,3.7642124377518202,13.926257857079383,5.087926668387611

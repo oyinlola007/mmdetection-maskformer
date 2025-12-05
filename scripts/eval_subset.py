@@ -179,8 +179,12 @@ def main():
         except (AttributeError, TypeError):
             # Fallback: try to get from config
             try:
-                leaf_dataset_cfg = cfg.test_dataloader.get("dataset", cfg.test_dataloader)
-                while isinstance(leaf_dataset_cfg, dict) and "dataset" in leaf_dataset_cfg:
+                leaf_dataset_cfg = cfg.test_dataloader.get(
+                    "dataset", cfg.test_dataloader
+                )
+                while (
+                    isinstance(leaf_dataset_cfg, dict) and "dataset" in leaf_dataset_cfg
+                ):
                     leaf_dataset_cfg = leaf_dataset_cfg["dataset"]
                 # If we have indices, use that length; otherwise we can't determine it
                 if "indices" in leaf_dataset_cfg:
@@ -206,8 +210,7 @@ def main():
         cfg.test_dataloader.get("dataset", cfg.test_dataloader)
     )
     dataset_label = args.dataset_label
-    if dataset_label is None:
-        dataset_label = leaf_dataset_cfg.get("type")
+    # Priority: CLI arg > data_root folder name > ann_file name > dataset type
     if dataset_label is None:
         data_root = leaf_dataset_cfg.get("data_root")
         if data_root:
@@ -215,9 +218,11 @@ def main():
     if dataset_label is None:
         ann_file = leaf_dataset_cfg.get("ann_file")
         if ann_file:
-            dataset_label = osp.basename(ann_file)
+            # Extract meaningful name from annotation file
+            ann_name = osp.basename(ann_file).replace(".json", "")
+            dataset_label = ann_name
     if dataset_label is None:
-        dataset_label = "unknown_dataset"
+        dataset_label = leaf_dataset_cfg.get("type", "unknown_dataset")
 
     row = {
         "device": args.device,
@@ -226,24 +231,28 @@ def main():
         "dataset": dataset_label,
         "num_samples": actual_num_samples,
         "total_seconds": round(total_s, 3),
-        "fps": round(actual_num_samples / total_s, 3) if total_s > 0 and actual_num_samples > 0 else 0.0,
+        "fps": (
+            round(actual_num_samples / total_s, 3)
+            if total_s > 0 and actual_num_samples > 0
+            else 0.0
+        ),
         "emissions_kg": emissions_kg if emissions_kg is not None else None,
         "PQ": metrics.get("coco_panoptic/PQ") if isinstance(metrics, dict) else None,
         "SQ": metrics.get("coco_panoptic/SQ") if isinstance(metrics, dict) else None,
         "RQ": metrics.get("coco_panoptic/RQ") if isinstance(metrics, dict) else None,
     }
     file_exists = out_csv.exists()
-    
+
     # Ensure file ends with newline before appending (fixes manual edits without trailing newline)
     if file_exists:
         with open(out_csv, "rb") as f:
             f.seek(-1, 2)  # Go to last byte
             last_char = f.read(1)
-            if last_char != b'\n':
+            if last_char != b"\n":
                 # File doesn't end with newline, add one
                 with open(out_csv, "a") as f_append:
-                    f_append.write('\n')
-    
+                    f_append.write("\n")
+
     with open(out_csv, "a", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(row.keys()))
         if not file_exists:
