@@ -78,8 +78,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 100 \
-    --device macbook \
-    --work-dir work_dirs/eval_coco_macbook
+    --device macbook
 ```
 
 ---
@@ -97,8 +96,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 5 \
-    --device macbook \
-    --work-dir work_dirs/coco_macbook_n5
+    --device macbook
 ```
 
 #### Full COCO Evaluation
@@ -108,8 +106,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device macbook \
-    --work-dir work_dirs/coco_macbook_full
+    --device macbook
 ```
 
 #### VALID Dataset Evaluation
@@ -119,8 +116,7 @@ poetry run python scripts/eval_subset.py \
     external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_coco_on_valid.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device macbook \
-    --work-dir work_dirs/valid_macbook_full
+    --device macbook
 ```
 
 ---
@@ -142,8 +138,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 5 \
-    --device zedbox \
-    --work-dir work_dirs/coco_zedbox_n5
+    --device zedbox
 ```
 
 #### Full COCO Evaluation
@@ -153,8 +148,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device zedbox \
-    --work-dir work_dirs/coco_zedbox_full
+    --device zedbox
 ```
 
 #### VALID Dataset Evaluation
@@ -164,8 +158,7 @@ poetry run python scripts/eval_subset.py \
     external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_coco_on_valid.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device zedbox \
-    --work-dir work_dirs/valid_zedbox_full
+    --device zedbox
 ```
 
 ---
@@ -191,8 +184,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 5 \
-    --device nvidia \
-    --work-dir work_dirs/coco_nvidia_n5
+    --device nvidia
 ```
 
 #### Full COCO Evaluation
@@ -202,8 +194,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device nvidia \
-    --work-dir work_dirs/coco_nvidia_full
+    --device nvidia
 ```
 
 #### VALID Dataset Evaluation
@@ -213,8 +204,7 @@ poetry run python scripts/eval_subset.py \
     external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_coco_on_valid.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device nvidia \
-    --work-dir work_dirs/valid_nvidia_full
+    --device nvidia
 ```
 
 ---
