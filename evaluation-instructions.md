@@ -67,7 +67,7 @@ poetry run python scripts/eval_subset.py <config> <checkpoint> [options]
 | `config` | Yes | Path to model config file (`.py`) |
 | `checkpoint` | Yes | Path to model weights (`.pth`) |
 | `--n <N>` | No | Number of images to evaluate. Use `0` for full dataset. Default: `5` |
-| `--device <name>` | No | Device name for logging (e.g., `macbook`, `zedbox`, `nvidia`). Default: `unknown` |
+| `--device <name>` | No | Device name for logging (e.g., `macbook`, `zedbox`, `nvidia-server`). Default: `unknown` |
 | `--work-dir <path>` | No | Output directory for logs and emissions data |
 | `--dataset-label <name>` | No | Custom label for dataset in metrics CSV |
 
@@ -88,6 +88,15 @@ poetry run python scripts/eval_subset.py \
 ### MacBook (Apple Silicon)
 
 MacBooks with M1/M2/M3/M4 chips use MPS (Metal Performance Shaders) for acceleration.
+
+#### Activate Environment
+
+```bash
+cd /path/to/MMDetection
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+> **Note:** MacBook uses Poetry directly without conda. Ensure Poetry is installed and in your PATH.
 
 #### Quick Test (5 images)
 
@@ -125,11 +134,16 @@ poetry run python scripts/eval_subset.py \
 
 ZedBox uses NVIDIA Jetson with CUDA acceleration. Ensure CUDA is properly configured.
 
-#### Set GPU
+#### Activate Environment
 
 ```bash
+cd /path/to/MMDetection
+conda activate mmdetection
+export PATH="$HOME/.local/bin:$PATH"
 export CUDA_VISIBLE_DEVICES=0
 ```
+
+> **Note:** ZedBox uses conda environment `mmdetection` with Poetry. Activate conda first, then ensure Poetry is in PATH.
 
 #### Quick Test (5 images)
 
@@ -167,6 +181,16 @@ poetry run python scripts/eval_subset.py \
 
 For workstations with dedicated NVIDIA GPUs (RTX 4000, A100, etc.).
 
+#### Activate Environment
+
+```bash
+cd /path/to/MMDetection
+conda activate mmdetection
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+> **Note:** NVIDIA workstation uses conda environment `mmdetection` with Poetry. Activate conda first, then ensure Poetry is in PATH.
+
 #### Select GPU (multi-GPU systems)
 
 ```bash
@@ -184,7 +208,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 5 \
-    --device nvidia
+    --device nvidia-server
 ```
 
 #### Full COCO Evaluation
@@ -194,7 +218,7 @@ poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device nvidia
+    --device nvidia-server
 ```
 
 #### VALID Dataset Evaluation
@@ -204,7 +228,7 @@ poetry run python scripts/eval_subset.py \
     external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_coco_on_valid.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device nvidia
+    --device nvidia-server
 ```
 
 ---
@@ -256,7 +280,7 @@ Results are appended to `outputs/run_metrics.csv`:
 
 | Column | Description |
 |--------|-------------|
-| `device` | Device name (macbook, zedbox, nvidia) |
+| `device` | Device name (macbook, zedbox, nvidia-server) |
 | `experiment` | Work directory name |
 | `model` | Config file name |
 | `dataset` | Dataset type |
@@ -290,6 +314,11 @@ Run these commands on each respective device:
 
 **MacBook:**
 ```bash
+# Activate environment
+cd /path/to/MMDetection
+export PATH="$HOME/.local/bin:$PATH"
+
+# Run evaluation
 poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
@@ -299,7 +328,13 @@ poetry run python scripts/eval_subset.py \
 
 **ZedBox:**
 ```bash
+# Activate environment
+cd /path/to/MMDetection
+conda activate mmdetection
+export PATH="$HOME/.local/bin:$PATH"
 export CUDA_VISIBLE_DEVICES=0
+
+# Run evaluation
 poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
@@ -309,18 +344,29 @@ poetry run python scripts/eval_subset.py \
 
 **NVIDIA Workstation:**
 ```bash
+# Activate environment
+cd /path/to/MMDetection
+conda activate mmdetection
+export PATH="$HOME/.local/bin:$PATH"
 export CUDA_VISIBLE_DEVICES=0
+
+# Run evaluation
 poetry run python scripts/eval_subset.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device nvidia
+    --device nvidia-server
 ```
 
 ### Compare All Devices on VALID (Full Dataset)
 
 **MacBook:**
 ```bash
+# Activate environment
+cd /path/to/MMDetection
+export PATH="$HOME/.local/bin:$PATH"
+
+# Run evaluation
 poetry run python scripts/eval_subset.py \
     external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_coco_on_valid.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
@@ -330,7 +376,13 @@ poetry run python scripts/eval_subset.py \
 
 **ZedBox:**
 ```bash
+# Activate environment
+cd /path/to/MMDetection
+conda activate mmdetection
+export PATH="$HOME/.local/bin:$PATH"
 export CUDA_VISIBLE_DEVICES=0
+
+# Run evaluation
 poetry run python scripts/eval_subset.py \
     external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_coco_on_valid.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
@@ -340,12 +392,18 @@ poetry run python scripts/eval_subset.py \
 
 **NVIDIA Workstation:**
 ```bash
+# Activate environment
+cd /path/to/MMDetection
+conda activate mmdetection
+export PATH="$HOME/.local/bin:$PATH"
 export CUDA_VISIBLE_DEVICES=0
+
+# Run evaluation
 poetry run python scripts/eval_subset.py \
     external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_coco_on_valid.py \
     external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
     --n 0 \
-    --device nvidia
+    --device nvidia-server
 ```
 
 ---
