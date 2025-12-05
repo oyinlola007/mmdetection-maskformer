@@ -227,43 +227,7 @@ poetry run mim download mmdet \
   --dest external/checkpoints
 ```
 
----
-
-## Section 4: Run Evaluation
-
-### Select GPU (server only)
-
-```bash
-export CUDA_VISIBLE_DEVICES=0
-```
-
-### MaskFormer R50 (smaller model)
-
-```bash
-poetry run python scripts/eval_subset.py \
-  external/mmdet-configs/maskformer/maskformer_r50_ms-16xb1-75e_coco.py \
-  external/checkpoints/maskformer_r50_ms-16xb1-75e_coco_20230116_095226-baacd858.pth \
-  --n 5
-```
-
-### MaskFormer Swin-L (larger model)
-
-```bash
-poetry run python scripts/eval_subset.py \
-  external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco.py \
-  external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
-  --n 5
-```
-
-### Full validation run
-
-```bash
-poetry run python scripts/eval_subset.py \
-  external/mmdet-configs/maskformer/maskformer_swin-l-p4-w12_64xb1-ms-300e_valid.py \
-  external/checkpoints/maskformer_swin-l-p4-w12_64xb1-ms-300e_coco_20220326_221612-c63ab967.pth \
-  --n 0 \
-  --dataset-label valid_baseline
-```
+> **Next:** See [docs/evaluation-instructions.md](docs/evaluation-instructions.md) for running evaluations on different devices.
 
 ---
 

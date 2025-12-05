@@ -68,6 +68,12 @@ def parse_args():
         default=None,
         help="Optional label to record in logs for the evaluated dataset.",
     )
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="unknown",
+        help="Device name for metrics logging (e.g., macbook, zedbox, nvidia).",
+    )
     # local rank passthrough
     parser.add_argument("--local_rank", "--local-rank", type=int, default=0)
     args = parser.parse_args()
@@ -214,6 +220,7 @@ def main():
         dataset_label = "unknown_dataset"
 
     row = {
+        "device": args.device,
         "experiment": osp.basename(work_dir),
         "model": osp.basename(args.config),
         "dataset": dataset_label,
@@ -226,6 +233,17 @@ def main():
         "RQ": metrics.get("coco_panoptic/RQ") if isinstance(metrics, dict) else None,
     }
     file_exists = out_csv.exists()
+    
+    # Ensure file ends with newline before appending (fixes manual edits without trailing newline)
+    if file_exists:
+        with open(out_csv, "rb") as f:
+            f.seek(-1, 2)  # Go to last byte
+            last_char = f.read(1)
+            if last_char != b'\n':
+                # File doesn't end with newline, add one
+                with open(out_csv, "a") as f_append:
+                    f_append.write('\n')
+    
     with open(out_csv, "a", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(row.keys()))
         if not file_exists:
